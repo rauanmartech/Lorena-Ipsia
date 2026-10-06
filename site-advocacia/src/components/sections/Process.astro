@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../../content/site';
+import ProcessIcon from '../ui/ProcessIcon.astro';
+---
+
+<section class="section process" id="atendimento" aria-labelledby="process-title">
+  <span class="process-watermark" aria-hidden="true"></span>
+  <div class="process-grid">
+    <div class="process-copy">
+      <p class="process-eyebrow">{site.process.eyebrow}</p>
+      <h2 id="process-title">
+        <span>{site.process.titleStart}</span>
+        <span class="title-accent">{site.process.titleAccent}</span>
+      </h2>
+      <p class="process-description">{site.process.description}</p>
+
+      <div class="steps">
+        {site.process.steps.map((step) => (
+          <article class="step">
+            <span class="step-icon"><ProcessIcon variant={step.icon} /></span>
+            <h3>{step.title}</h3>
+            <p>{step.description}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div class="process-visual">
+      <Image
+        src={site.process.image}
+        alt={site.process.imageAlt}
+        width={960}
+        format="webp"
+        loading="lazy"
+        decoding="async"
+        class="process-photo"
+      />
+      <div class="process-squares" aria-hidden="true">
+        <span class="square square-gold"></span>
+        <span class="square square-navy"></span>
+        <span class="square square-paper"></span>
+        <span class="square square-lower"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .process { position: relative; z-index: 0; overflow: visible; padding-block: 0; background: #f3f1ed; }
+  .process-watermark { position: absolute; z-index: 0; left: -40px; bottom: -8px; width: clamp(330px, 31vw, 420px); aspect-ratio: 748 / 574; background: linear-gradient(180deg, var(--navy) 52%, #3f668e 100%); opacity: .1; pointer-events: none; -webkit-mask: url('/images/marca-agua-lorena-ipsia.webp') center / contain no-repeat; mask: url('/images/marca-agua-lorena-ipsia.webp') center / contain no-repeat; }
+  .process-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 58%) minmax(0, 42%); max-width: 1600px; min-height: 650px; margin-inline: auto; }
+  .process-copy { display: flex; flex-direction: column; justify-content: center; min-width: 0; padding: clamp(4rem, 6vw, 7rem) clamp(2.5rem, 5vw, 7rem); }
+  .process-eyebrow { color: #9e8051; font-size: .64rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+  h2 { display: flex; flex-direction: column; margin-top: 1.1rem; color: var(--navy-deep); font-family: var(--font-serif); font-size: clamp(3rem, 4.4vw, 4.7rem); font-weight: 400; line-height: 1.02; letter-spacing: -.048em; text-transform: uppercase; }
+  .title-accent { color: #ac8f62; }
+  .process-description { max-width: 610px; margin-top: 1.6rem; color: #50545a; font-size: .96rem; line-height: 1.7; }
+  .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(.8rem, 2vw, 1.8rem); max-width: 680px; margin-top: 3.4rem; }
+  .step { min-width: 0; text-align: center; }
+  .step-icon { display: grid; place-items: center; width: 88px; height: 88px; margin: 0 auto 1.2rem; border: 1px solid var(--gold); border-radius: 50%; color: var(--navy-deep); }
+  h3 { color: var(--navy-deep); font-size: .76rem; font-weight: 700; line-height: 1.3; letter-spacing: .09em; text-transform: uppercase; }
+  .step p { max-width: 21ch; margin: .55rem auto 0; color: #62656a; font-size: .78rem; line-height: 1.55; }
+  .process-visual { position: relative; min-height: 650px; background: #d8d1c6; }
+  .process-visual :global(.process-photo) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; }
+  .process-squares { position: absolute; inset: 0; pointer-events: none; }
+  .square { position: absolute; display: block; aspect-ratio: 1; }
+  .square-gold { width: 58px; left: -26px; top: 21%; background: rgba(201, 168, 111, .55); }
+  .square-navy { width: 68px; left: -50px; top: 35%; background: var(--navy-deep); }
+  .square-paper { width: 48px; left: -8px; top: 40%; background: #f3f1ed; }
+  .square-lower { width: 62px; left: -30px; bottom: 24%; background: rgba(248, 248, 246, .85); }
+
+  @media (max-width: 1100px) { .process-copy { padding-inline: 3rem; } h2 { font-size: clamp(2.6rem, 4.5vw, 4rem); } .step-icon { width: 76px; height: 76px; } }
+  @media (max-width: 980px) { .process-watermark { display: none; } .process-grid { grid-template-columns: 1fr; } .process-copy { padding: 5rem max(2rem, calc((100vw - 700px) / 2)); } .process-visual { min-height: 520px; } .process-visual :global(.process-photo) { object-position: center 24%; } .square-gold { left: 8%; top: -27px; } .square-navy { left: 16%; top: -18px; } .square-paper { left: 24%; top: 8px; } .square-lower { left: auto; right: 12%; bottom: 0; } }
+  @media (max-width: 600px) { .process-copy { padding: 4.5rem 1.25rem; } h2 { font-size: clamp(2.55rem, 10vw, 3.6rem); } .steps { grid-template-columns: 1fr; gap: 1.8rem; margin-top: 2.5rem; } .step { display: grid; grid-template-columns: 68px 1fr; column-gap: 1.1rem; text-align: left; align-items: center; } .step-icon { grid-row: span 2; width: 68px; height: 68px; margin: 0; } .step-icon :global(svg) { width: 32px; height: 32px; } .step p { max-width: 34ch; margin: .2rem 0 0; } .process-visual { min-height: 430px; } }
+</style>

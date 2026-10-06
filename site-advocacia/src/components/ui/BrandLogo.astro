@@ -1,0 +1,24 @@
+---
+interface Props {
+  variant: 'header' | 'footer';
+}
+
+const { variant } = Astro.props;
+---
+
+<img
+  class:list={['brand-logo', variant]}
+  src="/images/logo-lorena-ipsia-horizontal.png"
+  alt="Lorena Ípsia Advocacia"
+  width="2172"
+  height="724"
+  decoding="async"
+  loading={variant === 'footer' ? 'lazy' : 'eager'}
+/>
+
+<style>
+  .brand-logo { display: block; height: auto; max-width: none; }
+  .header { width: 250px; }
+  .footer { width: min(100%, 340px); }
+  @media (max-width: 850px) { .header { width: min(210px, calc(100vw - 110px)); } }
+</style>

@@ -1,0 +1,25 @@
+---
+interface Props {
+  id?: string;
+  eyebrow: string;
+  title: string;
+  description?: string;
+  light?: boolean;
+}
+
+const { id, eyebrow, title, description, light = false } = Astro.props;
+---
+
+<div class:list={['section-intro', { light }]}>
+  <p class="eyebrow">{eyebrow}</p>
+  <h2 id={id}>{title}</h2>
+  {description && <p class="intro-description">{description}</p>}
+</div>
+
+<style>
+  .section-intro { max-width: 680px; }
+  h2 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(2.45rem, 5vw, 4.5rem); line-height: 1.06; letter-spacing: -.045em; margin-top: 1.4rem; text-wrap: balance; }
+  .intro-description { max-width: 520px; color: var(--gray-600); font-size: .94rem; line-height: 1.85; margin-top: 1.5rem; }
+  .light .eyebrow { color: #b8b8b5; }
+  .light .intro-description { color: #bdbdba; }
+</style>

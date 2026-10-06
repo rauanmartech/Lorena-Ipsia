@@ -1,0 +1,59 @@
+---
+import { site } from '../../content/site';
+import BrandLogo from '../ui/BrandLogo.astro';
+---
+
+<footer class="site-footer">
+  <div class="container footer-main">
+    <div class="footer-identity">
+      <a class="footer-brand" href="#top" aria-label={`${site.brand} — voltar ao início`}>
+        <BrandLogo variant="footer" />
+      </a>
+      <p>{site.footer.description}</p>
+    </div>
+    <div class="footer-explore">
+      <p class="footer-label">EXPLORAR</p>
+      <nav aria-label="Navegação do rodapé">
+        {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+    <div class="footer-contacts">
+      <p class="footer-label">CONTATOS</p>
+      <address aria-label="Contatos do escritório">
+        {site.contact.channels.map((channel) => (
+          <div class="footer-contact-item">
+            <span>{channel.label}</span>
+            <strong>{channel.value}</strong>
+          </div>
+        ))}
+      </address>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {new Date().getFullYear()} {site.brand}</span>
+    <a class="back-to-top" href="#top">Voltar ao início <span aria-hidden="true">↑</span></a>
+  </div>
+</footer>
+
+<style>
+  .site-footer { position: relative; background: var(--navy-deep); color: #f6f5f2; padding-top: clamp(3.5rem, 6vw, 5rem); }
+  .site-footer::before { content: ''; position: absolute; left: 0; top: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--gold) 28%, transparent 75%); opacity: .65; }
+  .footer-main { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(130px, .55fr) minmax(250px, 1fr); column-gap: clamp(2rem, 5vw, 5rem); padding-bottom: clamp(3rem, 5vw, 4.5rem); }
+  .footer-identity { min-width: 0; }
+  .footer-brand { display: inline-block; width: min(100%, 340px); }
+  .footer-identity p { max-width: 310px; margin-top: -.15rem; padding-left: 1rem; border-left: 2px solid var(--gold); color: #c5cbd0; font-size: .82rem; line-height: 1.65; }
+  .footer-label { color: var(--gold-light); font-size: .65rem; font-weight: 700; letter-spacing: .18em; }
+  nav { display: grid; justify-items: start; gap: .85rem; margin-top: 1.55rem; color: #e0e2e1; font-size: .84rem; }
+  nav a, .back-to-top { transition: color .2s ease; }
+  nav a:hover, .back-to-top:hover { color: var(--gold-light); }
+  address { display: grid; gap: 1.2rem; margin-top: 1.55rem; font-style: normal; }
+  .footer-contact-item { display: grid; gap: .25rem; }
+  .footer-contact-item span { color: #9eabb4; font-size: .7rem; }
+  .footer-contact-item strong { color: #eef0ed; font-size: .84rem; font-weight: 400; line-height: 1.5; overflow-wrap: anywhere; }
+  .back-to-top { display: inline-flex; align-items: center; gap: 1rem; padding-bottom: .35rem; border-bottom: 1px solid var(--gold); color: #e0e2e1; font-size: .76rem; white-space: nowrap; }
+  .back-to-top span { color: var(--gold-light); font-size: 1.1rem; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; border-top: 1px solid rgba(201, 168, 111, .3); padding-top: 1.5rem; padding-bottom: 1.8rem; color: #aeb8bc; font-size: .69rem; letter-spacing: .03em; }
+  @media (max-width: 900px) { .footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 3rem; } .footer-identity { grid-column: 1 / -1; } }
+  @media (max-width: 560px) { .footer-main { grid-template-columns: 1fr; row-gap: 2.5rem; } .footer-identity { grid-column: auto; } .footer-bottom { align-items: flex-start; flex-direction: column; } }
+</style>

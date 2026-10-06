@@ -1,0 +1,190 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../../content/site';
+import SectionIntro from '../ui/SectionIntro.astro';
+import PracticeIcon from '../ui/PracticeIcon.astro';
+---
+
+<section class="section practice" id="atuacao" aria-labelledby="practice-title">
+  <div class="container">
+    <div class="practice-heading">
+      <SectionIntro
+        id="practice-title"
+        eyebrow={site.practice.eyebrow}
+        title={site.practice.title}
+        description={site.practice.description}
+      />
+      <span class="practice-watermark" aria-hidden="true"></span>
+      <p class="section-aside">ÁREAS / 01—03</p>
+    </div>
+
+    <div class="area-grid">
+      {site.practice.areas.map((area) => (
+        <article class="area-card">
+          <div class="area-image">
+            <Image
+              src={area.image}
+              alt={area.imageAlt}
+              width={900}
+              format="webp"
+              loading="lazy"
+              decoding="async"
+              class="card-photo"
+            />
+          </div>
+
+          <div class="area-heading">
+            <PracticeIcon variant={area.icon} />
+            <h3>{area.title}</h3>
+          </div>
+
+          <div class="area-details">
+            <p>{area.description}</p>
+            <span class="card-separator" aria-hidden="true"></span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .practice { position: relative; background: #f5f2ec; }
+  .practice::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 168, 111, .7), transparent); }
+
+  .practice-heading {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 2rem;
+    min-height: 365px;
+    margin-bottom: -2.25rem;
+    padding: clamp(2rem, 4vw, 4rem);
+    border: 1px solid rgba(201, 168, 111, .3);
+    background: var(--navy);
+    box-shadow: 0 22px 50px rgba(16, 31, 51, .12);
+  }
+
+  .practice-heading :global(.section-intro) { position: relative; z-index: 1; }
+  .practice-heading :global(.section-intro)::after { content: ''; display: block; width: 76px; height: 1px; margin-top: 1.6rem; background: var(--gold); }
+  .practice-heading :global(.eyebrow) { color: var(--gold-light); }
+  .practice-heading :global(h2) { color: #fffaf0; }
+  .practice-heading :global(.intro-description) { color: #d5dadd; }
+
+  .practice-watermark {
+    position: absolute;
+    top: 50%;
+    right: 3%;
+    width: clamp(240px, 30vw, 400px);
+    aspect-ratio: 748 / 574;
+    background: #7e9dbb;
+    opacity: .22;
+    pointer-events: none;
+    transform: translateY(-50%);
+    -webkit-mask: url('/images/marca-agua-lorena-ipsia.webp') center / contain no-repeat;
+    mask: url('/images/marca-agua-lorena-ipsia.webp') center / contain no-repeat;
+  }
+
+  .section-aside {
+    position: relative;
+    z-index: 1;
+    color: var(--gold-light);
+    font-size: .61rem;
+    letter-spacing: .14em;
+    white-space: nowrap;
+  }
+
+  .area-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 1.9vw, 1.65rem);
+    width: calc(100% - clamp(3rem, 8vw, 7rem));
+    margin-inline: auto;
+  }
+
+  .area-card {
+    display: grid;
+    grid-template-rows: 1fr 1fr 2fr;
+    height: 400px;
+    min-width: 0;
+    border: 1px solid rgba(16, 31, 51, .08);
+    background: #fffefa;
+    box-shadow: 0 14px 36px rgba(12, 23, 35, .07);
+  }
+
+  .area-image {
+    min-height: 0;
+    overflow: hidden;
+    background: var(--navy);
+  }
+
+  .area-image :global(.card-photo) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .area-heading {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: .65rem;
+    padding: .8rem clamp(1.15rem, 2vw, 1.7rem);
+  }
+
+  h3 {
+    color: var(--navy-deep);
+    font-family: var(--font-serif);
+    font-size: clamp(1rem, 1.35vw, 1.26rem);
+    font-weight: 400;
+    line-height: 1.12;
+    letter-spacing: -.015em;
+    text-transform: uppercase;
+  }
+
+  .area-details {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: .35rem clamp(1.15rem, 2vw, 1.7rem) 1.65rem;
+  }
+
+  .area-details p {
+    max-width: 26ch;
+    color: #555b60;
+    font-size: .9rem;
+    line-height: 1.65;
+  }
+
+  .card-separator {
+    display: block;
+    width: 66px;
+    height: 1px;
+    margin-top: auto;
+    background: var(--gold);
+  }
+
+  @media (max-width: 1050px) {
+    .practice-watermark { display: none; }
+  }
+
+  @media (max-width: 900px) {
+    .practice-heading { margin-bottom: 2rem; }
+    .area-grid { grid-template-columns: 1fr; width: 100%; max-width: 520px; }
+    .area-card { height: 400px; }
+    h3 { font-size: 1.25rem; }
+  }
+
+  @media (max-width: 600px) {
+    .practice-heading { align-items: start; flex-direction: column; gap: 2rem; min-height: 0; padding: 2.25rem 1.5rem; }
+  }
+</style>

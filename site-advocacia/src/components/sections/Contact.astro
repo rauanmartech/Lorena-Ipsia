@@ -1,0 +1,54 @@
+---
+import { site } from '../../content/site';
+---
+
+<section class="section contact" id="contato" aria-labelledby="contact-title">
+  <div class="container contact-grid">
+    <div class="contact-copy">
+      <p class="contact-eyebrow">{site.contact.eyebrow}</p>
+      <h2 id="contact-title">
+        <span>{site.contact.titleStart}</span>
+        <span class="title-accent">{site.contact.titleAccent}</span>
+      </h2>
+      <p class="contact-description">{site.contact.description}</p>
+      <span class="contact-rule" aria-hidden="true"></span>
+    </div>
+
+    <div class="contact-panel">
+      <div class="panel-heading">
+        <h3>{site.contact.panelTitle}</h3>
+      </div>
+      <div class="contact-list" aria-label="Canais de contato">
+        {site.contact.channels.map((channel) => (
+          <div class="contact-item">
+            <span>{channel.label}</span>
+            <strong>{channel.value}</strong>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact { position: relative; z-index: 1; overflow: hidden; background: var(--navy); color: var(--paper); }
+  .contact::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 168, 111, .65), transparent); }
+  .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .95fr); gap: clamp(3rem, 7vw, 7rem); align-items: center; }
+  .contact-copy { min-width: 0; }
+  .contact-eyebrow { color: var(--gold-light); font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+  h2 { display: flex; flex-direction: column; margin-top: 1.3rem; font-family: var(--font-serif); font-size: clamp(3rem, 4.8vw, 5rem); font-weight: 400; line-height: 1.03; letter-spacing: -.045em; }
+  .title-accent { color: var(--gold-light); }
+  .contact-description { max-width: 510px; margin-top: 1.8rem; color: #d4d9d8; font-size: 1rem; line-height: 1.8; }
+  .contact-rule { display: block; width: 72px; height: 1px; margin-top: 2.3rem; background: var(--gold); }
+  .contact-panel { position: relative; isolation: isolate; padding: clamp(1.7rem, 3vw, 2.7rem); border: 1px solid rgba(201, 168, 111, .4); background: #172840; box-shadow: 0 24px 60px rgba(2, 8, 18, .16); }
+  .contact-panel::before { content: ''; position: absolute; z-index: -1; top: -24px; right: -24px; width: 66px; height: 66px; border: 1px solid rgba(201, 168, 111, .55); }
+  .contact-panel::after { content: ''; position: absolute; z-index: -1; bottom: -18px; left: -18px; width: 46px; height: 46px; background: rgba(201, 168, 111, .35); }
+  .panel-heading { display: flex; align-items: start; justify-content: space-between; gap: 1rem; padding-bottom: 1.4rem; }
+  h3 { color: #f6f5f2; font-family: var(--font-serif); font-size: clamp(1.25rem, 2vw, 1.65rem); font-weight: 400; }
+  .contact-list { border-top: 1px solid rgba(201, 168, 111, .3); }
+  .contact-item { display: grid; grid-template-columns: 145px minmax(0, 1fr); gap: 1rem; align-items: baseline; padding: 1.35rem 0; border-bottom: 1px solid rgba(201, 168, 111, .3); }
+  .contact-item span { color: #bfc9cd; font-size: .73rem; }
+  .contact-item strong { color: #fffaf0; font-family: var(--font-serif); font-size: clamp(1rem, 1.5vw, 1.3rem); font-weight: 400; line-height: 1.35; overflow-wrap: anywhere; }
+  @media (max-width: 950px) { .contact-grid { grid-template-columns: 1fr; } .contact-copy { max-width: 700px; } .contact-panel { max-width: 700px; } }
+  @media (max-width: 520px) { h2 { font-size: clamp(2.5rem, 10vw, 3.3rem); } .panel-heading { flex-direction: column; } .contact-item { grid-template-columns: 1fr; gap: .4rem; } .contact-panel::before { right: -12px; } }
+</style>

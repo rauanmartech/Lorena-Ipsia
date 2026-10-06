@@ -1,0 +1,60 @@
+---
+import { site } from '../../content/site';
+import BrandLogo from '../ui/BrandLogo.astro';
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top" aria-label={`${site.brand} — voltar ao início`}>
+      <BrandLogo variant="header" />
+    </a>
+
+    <nav class="desktop-nav" aria-label="Navegação principal">
+      {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+
+    <a class="header-contact" href="#contato">Entrar em contato <span aria-hidden="true">↗</span></a>
+
+    <details class="mobile-menu">
+      <summary aria-label="Abrir menu"><span></span><span></span></summary>
+      <nav aria-label="Navegação móvel">
+        {site.navigation.map((item) => <a href={item.href}>{item.label}</a>)}
+        <a href="#contato">Entrar em contato</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  const mobileMenu = document.querySelector<HTMLDetailsElement>('.mobile-menu');
+
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileMenu.open = false;
+    });
+  });
+</script>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 20; color: #f6f5f2; background: rgba(7, 17, 31, .97); border-bottom: 1px solid rgba(201, 168, 111, .26); backdrop-filter: blur(14px); }
+  .header-inner { display: flex; align-items: center; min-height: 84px; gap: 2rem; }
+  .brand { display: block; margin-right: auto; min-width: 0; flex: none; }
+  .desktop-nav { display: flex; align-items: center; gap: 2.25rem; }
+  .desktop-nav a, .header-contact { font-size: .72rem; font-weight: 600; letter-spacing: .035em; }
+  .desktop-nav a { color: #dededa; transition: color .2s ease; }
+  .desktop-nav a:hover { color: var(--gold-light); }
+  .header-contact { display: inline-flex; align-items: center; gap: 1.25rem; border-bottom: 1px solid var(--gold); padding: .65rem 0; }
+  .header-contact span { font-size: 1rem; color: var(--gold-light); }
+  .mobile-menu { display: none; position: relative; }
+  @media (max-width: 850px) {
+    .header-inner { min-height: 76px; gap: 1rem; }
+    .desktop-nav, .header-contact { display: none; }
+    .mobile-menu { display: block; }
+    .mobile-menu summary { width: 42px; height: 42px; border: 1px solid rgba(201, 168, 111, .55); display: flex; flex-direction: column; justify-content: center; gap: 6px; align-items: center; cursor: pointer; list-style: none; }
+    .mobile-menu summary::-webkit-details-marker { display: none; }
+    .mobile-menu summary span { width: 18px; height: 1px; background: var(--gold-light); }
+    .mobile-menu nav { position: absolute; right: 0; top: calc(100% + 17px); width: min(290px, calc(100vw - 40px)); background: var(--navy-deep); border: 1px solid rgba(201, 168, 111, .45); box-shadow: 0 18px 50px rgba(0, 0, 0, .2); padding: .7rem; display: grid; }
+    .mobile-menu nav a { padding: .9rem 1rem; font-size: .82rem; border-bottom: 1px solid rgba(201, 168, 111, .22); }
+    .mobile-menu nav a:last-child { border-bottom: 0; }
+  }
+</style>

@@ -1,0 +1,6 @@
+site-advocacia/node_modules/
+site-advocacia/dist/
+site-advocacia/.astro/
+site-advocacia/.vercel/
+*.log
+.DS_Store

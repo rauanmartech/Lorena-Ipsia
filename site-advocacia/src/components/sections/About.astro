@@ -1,0 +1,85 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../../content/site';
+import AboutFeatureIcon from '../ui/AboutFeatureIcon.astro';
+---
+
+<section class="section about" id="sobre" aria-labelledby="about-title">
+  <div class="container about-grid">
+    <div class="about-visual">
+      <div class="visual-squares" aria-hidden="true">
+        <span class="square square-left"></span>
+        <span class="square square-top"></span>
+        <span class="square square-right"></span>
+        <span class="square square-bottom"></span>
+      </div>
+      <div class="about-photo">
+        <Image
+          src={site.about.image}
+          alt={site.about.imageAlt}
+          width={900}
+          format="webp"
+          loading="lazy"
+          decoding="async"
+          class="consultation-photo"
+        />
+      </div>
+      <div class="about-statement">
+        <span class="quote-mark" aria-hidden="true">“</span>
+        <p>{site.about.statement}</p>
+        <span class="statement-rule" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="about-copy">
+      <p class="about-eyebrow">{site.about.eyebrow}</p>
+      <h2 id="about-title">
+        <span>{site.about.titleStart}</span>
+        <span class="title-accent">{site.about.titleAccent}</span>
+      </h2>
+      <p class="about-description">{site.about.description}</p>
+
+      <div class="about-features">
+        {site.about.features.map((feature) => (
+          <div class="about-feature">
+            <AboutFeatureIcon variant={feature.icon} />
+            <div>
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about { background: var(--paper); }
+  .about-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: center; gap: clamp(3rem, 8vw, 8rem); }
+  .about-visual { position: relative; isolation: isolate; padding-block: 2.5rem; min-width: 0; }
+  .visual-squares { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+  .square { position: absolute; display: block; aspect-ratio: 1; }
+  .square-left { width: 19%; left: 0; top: 36%; background: rgba(201, 168, 111, .45); }
+  .square-top { width: 15%; right: 4%; top: 12%; background: rgba(201, 168, 111, .62); }
+  .square-right { width: 20%; right: 0; top: 45%; background: var(--navy-deep); }
+  .square-bottom { width: 18%; right: 8%; bottom: 11%; background: rgba(201, 168, 111, .72); }
+  .about-photo { position: relative; z-index: 1; width: 78%; aspect-ratio: 1.46; margin-left: 8%; overflow: hidden; background: var(--gray-100); }
+  .about-photo :global(.consultation-photo) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .about-statement { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; width: 78%; min-height: 215px; margin: -18px 0 0 8%; padding: 2rem clamp(1.4rem, 3vw, 2.5rem); background: var(--navy-deep); color: #f5f3ef; }
+  .quote-mark { height: 2.1rem; color: var(--gold); font-family: var(--font-serif); font-size: 4.1rem; line-height: 1; }
+  .about-statement p { max-width: 24ch; margin-top: .8rem; font-size: clamp(1.05rem, 1.45vw, 1.3rem); line-height: 1.45; }
+  .statement-rule { display: block; width: 68px; height: 1px; margin-top: 1.4rem; background: var(--gold); }
+  .about-copy { padding: 2rem 0; min-width: 0; }
+  .about-eyebrow { color: #a98b58; font-size: .65rem; font-weight: 700; letter-spacing: .18em; line-height: 1.5; text-transform: uppercase; }
+  h2 { display: flex; flex-direction: column; margin-top: 1rem; color: var(--navy-deep); font-family: var(--font-serif); font-size: clamp(2.5rem, 4.2vw, 4.2rem); font-weight: 400; line-height: 1.05; letter-spacing: -.045em; text-transform: uppercase; }
+  .title-accent { color: #ac8f62; }
+  .about-description { max-width: 540px; margin-top: 1.6rem; color: #4c5154; font-size: .96rem; line-height: 1.75; }
+  .about-features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.7rem; row-gap: 2.4rem; margin-top: 3rem; }
+  .about-feature { display: flex; align-items: flex-start; gap: .85rem; min-width: 0; }
+  .about-feature h3 { margin: .1rem 0 .5rem; color: var(--navy-deep); font-family: var(--font-serif); font-size: .91rem; font-weight: 400; line-height: 1.25; text-transform: uppercase; }
+  .about-feature p { color: var(--gray-600); font-size: .76rem; line-height: 1.55; }
+  @media (max-width: 1100px) { .about-features { grid-template-columns: 1fr; row-gap: 1.5rem; } }
+  @media (max-width: 980px) { .about-grid { grid-template-columns: 1fr; gap: 2.5rem; } .about-visual { width: min(100%, 560px); margin-inline: auto; } .about-copy { width: min(100%, 680px); margin-inline: auto; padding: 0; } .about-features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .about-visual { padding-block: 1.5rem; } .about-photo, .about-statement { width: 84%; } .about-statement { min-height: 175px; } .about-statement p { font-size: 1rem; } .about-features { grid-template-columns: 1fr; } h2 { font-size: clamp(2.1rem, 9vw, 3.2rem); } }
+</style>
