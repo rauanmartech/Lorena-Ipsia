@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Lorena Ípsia Advocacia</title>
+  <rect width="64" height="64" rx="13" fill="#07111f" />
+  <rect x="3.5" y="3.5" width="57" height="57" rx="10" fill="none" stroke="#c9a86f" stroke-width="1.5" />
+
+  <!-- Monograma reduzido para permanecer legível nas abas do navegador. -->
+  <path d="M13 14h19v3h-4v28h10v-5h3v9H13v-3h4V17h-4z" fill="#f8f8f6" />
+
+  <!-- Balança dourada: referência discreta à marca e à atuação jurídica. -->
+  <g fill="none" stroke="#c9a86f" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M35 22h22M46 19v25M40 45h12" stroke-width="2.5" />
+    <path d="M38 23l-4 11m8-11 4 11m4-11-4 11m8-11 4 11" stroke-width="1.7" />
+    <path d="M32 35c1.5 3 4 4.5 7 4.5s5.5-1.5 7-4.5m0 0c1.5 3 4 4.5 7 4.5s5.5-1.5 7-4.5" stroke-width="1.9" />
+  </g>
+  <circle cx="46" cy="19" r="2" fill="#d8bd8c" />
+</svg>

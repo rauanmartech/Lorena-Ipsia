@@ -32,6 +32,8 @@ site-advocacia/
 ├── package.json                     # scripts e dependências
 ├── tsconfig.json                    # TypeScript em modo strict
 ├── public/
+│   ├── favicon.svg                    # favicon vetorial da marca
+│   ├── og-image.jpg                   # prévia social minimalista, 1200 × 630 px
 │   └── images/
 │       ├── hero-advogada-v1.png         # fotografia aplicada ao background da hero
 │       ├── logo-lorena-ipsia-horizontal.png # logo ativa no header e footer
@@ -87,6 +89,7 @@ site-advocacia/
 
 - **Hero e cabeçalho:** azul-marinho profundo `#07111f` com dourado `#c9a86f` e dourado claro `#d8bd8c` para realces.
 - **Logo:** o PNG horizontal e transparente fornecido pelo usuário é reutilizado no header e no footer pelo componente `BrandLogo.astro`, sem edição do arquivo nem mesclagem CSS. A versão anterior permanece arquivada, mas não é carregada pela página. O header voltou a uma altura mais compacta, com menu móvel antecipado para evitar que a navegação quebre em telas médias.
+- **Identidade de compartilhamento:** o favicon SVG simplifica a marca em uma inicial clara e balança dourada sobre azul-marinho. A OG image JPEG usa a logo horizontal em branco e dourado sobre fundo azul-marinho, sem mensagem adicional.
 - **Superfícies claras:** fundo principal `#f8f8f6`, seção de atendimento `#f3f1ed` e texto escuro. A seção de contato usa `#101f33`; o footer usa `#07111f`.
 - Títulos com serifada do sistema (`Georgia`) e textos de interface com fonte sem serifa do sistema.
 - A hero usa a fotografia local `public/images/hero-advogada-v1.png` como fundo integral (`cover`). O gradiente preserva a leitura do texto; no celular, a foto permanece na parte superior e o texto fica sobre uma área mais escura na parte inferior.
@@ -122,7 +125,7 @@ Imagem gerada com a ferramenta integrada. A foto da hero foi a referência de id
 2. Inserir fotos e identidade visual autorizadas; preferir arquivos locais otimizados.
 3. Confirmar os dados de contato informados, decidir sobre links de e-mail e telefone e revisar o texto de cada botão.
 4. Confirmar a grafia do nome profissional, inserir a inscrição OAB e validar áreas de atuação e redação institucional.
-5. Atualizar `title` e `description` em `src/pages/index.astro`; configurar domínio, favicon, imagem social e demais metadados.
+5. Revisar `title` e `description` em `src/pages/index.astro`, validar o favicon e a imagem social e confirmar a URL pública usada pelos metadados após a publicação.
 6. Avaliar a necessidade de política de privacidade conforme as integrações e dados que o site vier a usar.
 7. Validar a versão final em celular e desktop, executar `npm run check` e `npm run build`.
 
@@ -130,9 +133,36 @@ Imagem gerada com a ferramenta integrada. A foto da hero foi a referência de id
 
 O repositório Git está na pasta acima do projeto. Ao importar o repositório na Vercel, defina **Root Directory** como `site-advocacia`. A Vercel detecta o Astro; o comando de build é `npm run build` e o diretório de saída é `dist`.
 
+O domínio público informado pelo usuário está definido em `astro.config.mjs` como `site: 'https://lorena-ipsia.vercel.app'`. O layout usa `Astro.site` para gerar `canonical` e URLs absolutas em `og:url`, `og:image` e `twitter:image`, inclusive em builds locais. A imagem social esperada em produção é `https://lorena-ipsia.vercel.app/og-image.jpg`. Não é necessário configurar `PUBLIC_SITE_URL` nem variáveis de sistema da Vercel para esses metadados. Se o domínio mudar, atualize `site` e faça uma nova implantação; depois confirme o HTML publicado e o acesso público ao JPG antes de testar o compartilhamento.
+
 O arquivo `package-lock.json` deve ser versionado para reproduzir as versões instaladas. `node_modules/`, `.astro/`, `dist/` e `.vercel/` são ignorados pelo `.gitignore` da raiz.
 
 ## Registro de alterações
+
+### 2026-10-06 — Domínio público fixado nos metadados
+
+- Configurado `https://lorena-ipsia.vercel.app` em `astro.config.mjs` como URL canônica do site, conforme endereço fornecido pelo usuário.
+- O layout passou a derivar `canonical`, `og:url`, `og:image` e `twitter:image` de `Astro.site`, sem depender de variáveis de ambiente. Incluídos `og:site_name` e texto alternativo do cartão social.
+- Na verificação antes desta alteração, a página publicada respondia, mas `/og-image.jpg` ainda retornava 404; será necessário implantar os arquivos locais para que a prévia social funcione no endereço público.
+
+### 2026-10-06 — Metadados de compartilhamento
+
+- Substituída a descrição provisória da página por uma descrição institucional curta, sem promessas ou credenciais não verificadas.
+- Acrescentados URL canônica e metadados de cartão grande para redes sociais, reutilizando a OG image em JPEG.
+- Mantido `PUBLIC_SITE_URL` como configuração prioritária e acrescentado `VERCEL_PROJECT_PRODUCTION_URL` como alternativa automática de produção quando as variáveis de sistema da Vercel estão expostas. Não há domínio fictício embutido no código.
+- Verificado em build de teste que `canonical`, `og:url`, `og:image` e `twitter:image` recebem URLs HTTPS absolutas; o build local sem domínio continua sem URLs de `localhost`.
+
+### 2026-10-06 — Imagem Open Graph minimalista
+
+- Gerada a imagem com a ferramenta integrada de imagens, usando a logo horizontal existente como referência visual. Prompt resumido: cartão social minimalista para Lorena Ípsia Advocacia, composição horizontal, fundo azul-marinho profundo, logo branca e dourada fiel à marca, margens amplas e um filete dourado discreto; sem fotografias, pessoas, slogans ou elementos extras.
+- Exportada para `public/og-image.jpg` em JPEG de 1200 × 630 px (41 KB), sem transparência, com margens adequadas a prévias de compartilhamento.
+- Adicionados metadados Open Graph de título, descrição, idioma, tipo, imagem, dimensões e texto alternativo em `BaseLayout.astro`. As URLs absolutas dependem da origem pública documentada acima.
+
+### 2026-10-06 — Proposta de favicon
+
+- Criado `public/favicon.svg` com composição vetorial em azul-marinho, marfim e dourado: inicial da marca e balança da Justiça simplificada para uso em abas.
+- Adicionado o link de favicon ao `BaseLayout.astro` para visualização local. A proposta aguarda aprovação do usuário e pode ser ajustada antes de publicação.
+- A OG image não foi gerada nesta etapa, conforme solicitado.
 
 ### 2026-10-06 — Limite inferior da marca d'água em Como funciona
 
